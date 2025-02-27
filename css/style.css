@@ -2699,6 +2699,7 @@ max-width: 18.1rem;
             justify-content: space-between;
             margin-top: 1rem;
             margin-top: 2rem;
+            z-index:0;
         }
         .author svg{
             transform: rotate(0deg);
