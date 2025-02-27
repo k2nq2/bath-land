@@ -2508,7 +2508,7 @@ max-width: 18.1rem;
             position: relative;
             width: 100%;
             max-width: 60rem;
-            overflow: visible !important;
+            overflow: hidden;
             margin: auto;
             display: block !important;
         }
@@ -2516,7 +2516,7 @@ max-width: 18.1rem;
             position: relative;
             width: 100%;
             max-width: 60rem;
-            overflow: hidden;
+            overflow: visible;
             margin: auto;
             display: block !important;
             margin-top: 7rem;
