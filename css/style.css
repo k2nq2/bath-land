@@ -2656,6 +2656,7 @@ max-width: 18.1rem;
             flex-direction: column;
             justify-content: space-between;
             max-width: 37rem;
+            width: 100%;
             padding: 3.4rem 4rem 3.1rem 3.2rem;
         }
         .testimonial2{
