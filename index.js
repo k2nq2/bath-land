@@ -263,9 +263,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateSlider() {
-        const slideWidth = slides2[0].offsetWidth;
-        sliderContainer2.style.transform = `translateX(-${index * slideWidth}px)`;
-        updateProgressBar();
+        requestAnimationFrame(() => {
+            const slideWidth = slides2[0].offsetWidth;
+            console.log("TranslateX:", -index * slideWidth); // Проверяем смещение
+            sliderContainer2.style.transform = `translateX(-${index * slideWidth}px)`;
+            updateProgressBar();
+        });
     }
 
     function updateProgressBar() {
@@ -287,20 +290,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Поддержка свайпа
-       let touchStartX = 0;
+    // Поддержка свайпа (фикс для Safari)
+    let touchStartX = 0;
     let touchEndX = 0;
     let isSwiping = false;
 
     sliderContainer2.addEventListener("touchstart", (e) => {
         touchStartX = e.touches[0].clientX;
         isSwiping = true;
+        e.preventDefault(); // Блокируем скролл страницы
     }, { passive: false });
 
     sliderContainer2.addEventListener("touchmove", (e) => {
         if (!isSwiping) return;
         touchEndX = e.touches[0].clientX;
-        e.preventDefault(); // Блокируем скролл страницы
+        e.preventDefault(); // Убеждаемся, что свайп работает
     }, { passive: false });
 
     sliderContainer2.addEventListener("touchend", () => {
@@ -322,6 +326,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (swipeDistance < 0 && index > 0) {
                 index--;
             }
+            console.log("Current Index:", index); // Проверяем, меняется ли индекс
             updateSlider();
         }
     }
@@ -329,6 +334,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Автоматически обновляем при изменении размера окна
     window.addEventListener("resize", updateSlidesToShow);
 });
+
 
 
 
