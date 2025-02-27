@@ -182,6 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function updateSlider() {
             const slideWidth = slides[0].offsetWidth;
+            sliderContainer.style.transition = "transform 0.3s ease"; // Добавил плавность
             sliderContainer.style.transform = `translateX(-${index * slideWidth}px)`;
             updateProgressBar();
         }
@@ -205,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Поддержка свайпа
+        // === Поддержка свайпа (фикс для Safari) ===
         let touchStartX = 0;
         let touchEndX = 0;
         let isSwiping = false;
@@ -218,8 +219,8 @@ document.addEventListener("DOMContentLoaded", function () {
         sliderContainer.addEventListener("touchmove", (e) => {
             if (!isSwiping) return;
             touchEndX = e.touches[0].clientX;
-            // e.preventDefault(); // Отключил, чтобы не блокировать скролл Safari
-        }, { passive: true });
+            e.preventDefault(); // Safari требует блокировки скролла страницы
+        }, { passive: false });
 
         sliderContainer.addEventListener("touchend", () => {
             if (!isSwiping) return;
