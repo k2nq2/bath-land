@@ -625,6 +625,7 @@ button {
 
 svg {
     transform: rotate(-90deg);
+    pointer-events: none;
 }
 
 .progress-ring-bg {
