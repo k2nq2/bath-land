@@ -2223,7 +2223,7 @@ max-width: 18.1rem;
         display: flex;
     }
     .team-item{
-        
+        cursor:pointer;
     }
     .team-item img{
         height: 28rem;
@@ -2637,7 +2637,6 @@ max-width: 18.1rem;
         /* Адаптив для телефонов */
         @media (max-width: 768px) {
             .slide5 { flex: 0 0 100%;
-                    cursor:pointer;
                      z-index: 0;
                     } /* Показывать 1 карточку */
         }
