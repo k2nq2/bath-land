@@ -2508,7 +2508,7 @@ max-width: 18.1rem;
             position: relative;
             width: 100%;
             max-width: 60rem;
-            overflow: visible;
+            overflow: visible !important;
             margin: auto;
             display: block !important;
         }
