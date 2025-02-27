@@ -2572,7 +2572,10 @@ max-width: 18.1rem;
         
         /* Адаптив для телефонов */
         @media (max-width: 768px) {
-            .slide6 { flex: 0 0 100%; } /* Показывать 1 карточку */
+            .slide6 { flex: 0 0 100%;
+                    cursor: pointer;
+                    } /* Показывать 1 карточку */
+            
         }
         .progress-bar2 {
             width: 100%;
@@ -2624,7 +2627,9 @@ max-width: 18.1rem;
         
         /* Адаптив для телефонов */
         @media (max-width: 768px) {
-            .slide5 { flex: 0 0 100%; } /* Показывать 1 карточку */
+            .slide5 { flex: 0 0 100%;
+                    cursor:pointer;
+                    } /* Показывать 1 карточку */
         }
         .progress-bar2 {
             width: 100%;
