@@ -191,6 +191,14 @@ document.addEventListener("DOMContentLoaded", function () {
             sliderContainer.style.transition = "transform 0.3s ease";
             sliderContainer.style.transform = `translateX(-${index * slideWidthRem}rem)`;
             updateProgressBar();
+
+            // 🔥 Хак для обновления DOM (чтобы браузер не терял обработку свайпов)
+            setTimeout(() => {
+                sliderContainer.style.transform = "translateX(0)";
+                requestAnimationFrame(() => {
+                    sliderContainer.style.transform = "";
+                });
+            }, 50);
         }
 
         function updateProgressBar() {
@@ -233,8 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let diffY = Math.abs(touchMoveY - touchStartY);
 
             if (diffX > diffY) { 
-                // Блокируем вертикальный скролл только если движение горизонтальное
-                e.preventDefault();
+                e.preventDefault(); // Блокируем вертикальный скролл
             }
 
             touchEndX = touchMoveX;
@@ -266,7 +273,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initSlider(".slider-container5", ".slide5", ".prev-btn5", ".next-btn5", ".progress");
     initSlider(".slider-container6", ".slide6", ".prev-btn6", ".next-btn6", ".progress2");
 });
-
 document.addEventListener("DOMContentLoaded", function () {
     const slides = document.querySelectorAll(".slide2");
     const fullscreenContainer = document.querySelector(".fullscreen-image");
