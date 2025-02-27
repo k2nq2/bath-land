@@ -256,6 +256,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let index = 0;
     let slides2ToShow = window.innerWidth < 768 ? 1 : 2;
+    let isSwiping = false;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function updateSlidesToShow() {
         slides2ToShow = window.innerWidth < 768 ? 1 : 2;
@@ -265,9 +268,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateSlider() {
         requestAnimationFrame(() => {
             const slideWidth = slides2[0].offsetWidth;
-            console.log("TranslateX:", -index * slideWidth); // Проверяем смещение
-            sliderContainer2.style.transform = `translateX(-${index * slideWidth}px)`;
-            updateProgressBar();
+            sliderContainer2.style.transition = "none";
+            sliderContainer2.style.transform = "translateX(0)";
+            setTimeout(() => {
+                sliderContainer2.style.transition = "transform 0.3s ease-in-out";
+                sliderContainer2.style.transform = `translateX(-${index * slideWidth}px)`;
+                updateProgressBar();
+            }, 10);
         });
     }
 
@@ -291,20 +298,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Поддержка свайпа (фикс для Safari)
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let isSwiping = false;
-
     sliderContainer2.addEventListener("touchstart", (e) => {
         touchStartX = e.touches[0].clientX;
         isSwiping = true;
-        e.preventDefault(); // Блокируем скролл страницы
+        e.preventDefault();
     }, { passive: false });
 
     sliderContainer2.addEventListener("touchmove", (e) => {
         if (!isSwiping) return;
         touchEndX = e.touches[0].clientX;
-        e.preventDefault(); // Убеждаемся, что свайп работает
+        e.preventDefault();
     }, { passive: false });
 
     sliderContainer2.addEventListener("touchend", () => {
@@ -320,21 +323,22 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleSwipe() {
         let swipeDistance = touchStartX - touchEndX;
 
-        if (Math.abs(swipeDistance) > 50) { // Минимальная длина свайпа
+        if (Math.abs(swipeDistance) > 50) {
             if (swipeDistance > 0 && index < slides2.length - slides2ToShow) {
                 index++;
             } else if (swipeDistance < 0 && index > 0) {
                 index--;
             }
-            console.log("Current Index:", index); // Проверяем, меняется ли индекс
             updateSlider();
         }
+
+        // 🔹 Сбрасываем координаты
+        touchStartX = 0;
+        touchEndX = 0;
     }
 
-    // Автоматически обновляем при изменении размера окна
     window.addEventListener("resize", updateSlidesToShow);
 });
-
 
 
 
