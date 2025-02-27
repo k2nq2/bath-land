@@ -205,22 +205,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Поддержка свайпа
-       let touchStartX = 0;
+         let touchStartX = 0;
     let touchEndX = 0;
     let isSwiping = false;
 
-    sliderContainer2.addEventListener("touchstart", (e) => {
+    sliderContainer.addEventListener("touchstart", (e) => {
         touchStartX = e.touches[0].clientX;
         isSwiping = true;
-    }, { passive: false });
+    });
 
-    sliderContainer2.addEventListener("touchmove", (e) => {
+    sliderContainer.addEventListener("touchmove", (e) => {
         if (!isSwiping) return;
         touchEndX = e.touches[0].clientX;
-        e.preventDefault(); // Блокируем скролл страницы
-    }, { passive: false });
+    });
 
-    sliderContainer2.addEventListener("touchend", () => {
+    sliderContainer.addEventListener("touchend", () => {
         if (!isSwiping) return;
         isSwiping = false;
         handleSwipe();
@@ -230,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let swipeDistance = touchStartX - touchEndX;
 
         if (Math.abs(swipeDistance) > 50) { // Минимальная длина свайпа
-            if (swipeDistance > 0 && index < slides2.length - slides2ToShow) {
+            if (swipeDistance > 0 && index < slides.length - slidesToShow) {
                 index++;
             } else if (swipeDistance < 0 && index > 0) {
                 index--;
