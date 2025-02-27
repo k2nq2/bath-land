@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function updateSlider() {
             const slideWidth = slides[0].offsetWidth;
-            const slideWidthRem = getRem(slideWidth); // Конвертируем px → rem
+            const slideWidthRem = getRem(slideWidth);
             sliderContainer.style.transition = "transform 0.3s ease";
             sliderContainer.style.transform = `translateX(-${index * slideWidthRem}rem)`;
             updateProgressBar();
@@ -212,21 +212,33 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // === Поддержка свайпа (фикс для Safari) ===
+        // === Поддержка свайпа ===
         let touchStartX = 0;
+        let touchStartY = 0;
         let touchEndX = 0;
         let isSwiping = false;
 
         sliderContainer.addEventListener("touchstart", (e) => {
             touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
             isSwiping = true;
-        }, { passive: false });
+        }, { passive: true });
 
         sliderContainer.addEventListener("touchmove", (e) => {
-    if (!isSwiping || !e.cancelable) return; 
-    touchEndX = e.touches[0].clientX;
-    e.preventDefault();
-}, { passive: false });
+            if (!isSwiping) return;
+
+            let touchMoveX = e.touches[0].clientX;
+            let touchMoveY = e.touches[0].clientY;
+            let diffX = Math.abs(touchMoveX - touchStartX);
+            let diffY = Math.abs(touchMoveY - touchStartY);
+
+            if (diffX > diffY) { 
+                // Блокируем вертикальный скролл только если движение горизонтальное
+                e.preventDefault();
+            }
+
+            touchEndX = touchMoveX;
+        }, { passive: false });
 
         sliderContainer.addEventListener("touchend", () => {
             if (!isSwiping) return;
@@ -234,14 +246,10 @@ document.addEventListener("DOMContentLoaded", function () {
             handleSwipe();
         });
 
-        sliderContainer.addEventListener("touchcancel", () => {
-            isSwiping = false;
-        });
-
         function handleSwipe() {
             let swipeDistance = touchStartX - touchEndX;
 
-            if (Math.abs(swipeDistance) > 50) { // Минимальная длина свайпа
+            if (Math.abs(swipeDistance) > 50) {
                 if (swipeDistance > 0 && index < slides.length - slidesToShow) {
                     index++;
                 } else if (swipeDistance < 0 && index > 0) {
@@ -254,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.addEventListener("resize", updateSlidesToShow);
     }
 
-    // Инициализация для обоих слайдеров
+    // Инициализация слайдеров
     initSlider(".slider-container5", ".slide5", ".prev-btn5", ".next-btn5", ".progress");
     initSlider(".slider-container6", ".slide6", ".prev-btn6", ".next-btn6", ".progress2");
 });
