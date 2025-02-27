@@ -205,24 +205,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Поддержка свайпа
-         let touchStartX = 0;
+    // Поддержка свайпа (с фиксами для Safari)
+    let touchStartX = 0;
     let touchEndX = 0;
     let isSwiping = false;
 
     sliderContainer.addEventListener("touchstart", (e) => {
         touchStartX = e.touches[0].clientX;
         isSwiping = true;
-    });
+    }, { passive: false });
 
     sliderContainer.addEventListener("touchmove", (e) => {
         if (!isSwiping) return;
         touchEndX = e.touches[0].clientX;
-    });
+        e.preventDefault(); // Блокируем скролл страницы
+    }, { passive: false });
 
     sliderContainer.addEventListener("touchend", () => {
         if (!isSwiping) return;
         isSwiping = false;
         handleSwipe();
+    });
+
+    sliderContainer.addEventListener("touchcancel", () => {
+        isSwiping = false;
     });
 
     function handleSwipe() {
@@ -281,26 +287,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Поддержка свайпа (исправленный код)
-    let touchStartX = 0;
+    // Поддержка свайпа
+       let touchStartX = 0;
     let touchEndX = 0;
     let isSwiping = false;
 
     sliderContainer2.addEventListener("touchstart", (e) => {
         touchStartX = e.touches[0].clientX;
         isSwiping = true;
-    });
+    }, { passive: false });
 
     sliderContainer2.addEventListener("touchmove", (e) => {
         if (!isSwiping) return;
         touchEndX = e.touches[0].clientX;
         e.preventDefault(); // Блокируем скролл страницы
-    });
+    }, { passive: false });
 
     sliderContainer2.addEventListener("touchend", () => {
         if (!isSwiping) return;
         isSwiping = false;
         handleSwipe();
+    });
+
+    sliderContainer2.addEventListener("touchcancel", () => {
+        isSwiping = false;
     });
 
     function handleSwipe() {
