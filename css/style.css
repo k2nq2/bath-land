@@ -2540,6 +2540,7 @@ max-width: 18.1rem;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
         
         .team-card {
@@ -2627,6 +2628,7 @@ max-width: 18.1rem;
             margin: 1rem;
             color: #fff;
             margin-top: 0px;
+            position: relative;
         }
         .prev-btn5{
            
