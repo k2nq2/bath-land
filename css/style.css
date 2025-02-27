@@ -2583,7 +2583,10 @@ max-width: 18.1rem;
         @media (max-width: 768px) {
             .slide6 { flex: 0 0 100%;
                     cursor: pointer;
+                     pointer-events: auto;
                     } /* Показывать 1 карточку */
+            .slide6 *{
+                pointer-events: none;
             
         }
         .progress-bar2 {
