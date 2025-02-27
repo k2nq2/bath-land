@@ -2258,6 +2258,8 @@ max-width: 18.1rem;
     .slider-container5 {
         display: flex;
         transition: transform 0.3s ease-in-out;
+        touch-action: pan-y;
+        pointer-events: all;
     }
     
     .slide5 {
@@ -2525,9 +2527,10 @@ max-width: 18.1rem;
         .slider-container6 {
             display: flex;
             transition: transform 0.3s ease-in-out;
-            touch-action: none;
             -webkit-user-select: none; /* Отключает выделение текста */
             user-select: none;
+            touch-action: pan-y;
+            pointer-events: all;
         }
         
         .slide6 {
