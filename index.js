@@ -223,10 +223,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }, { passive: false });
 
         sliderContainer.addEventListener("touchmove", (e) => {
-            if (!isSwiping) return;
-            touchEndX = e.touches[0].clientX;
-            e.preventDefault(); // Safari требует блокировки скролла страницы
-        }, { passive: false });
+    if (!isSwiping || !e.cancelable) return; 
+    touchEndX = e.touches[0].clientX;
+    e.preventDefault();
+}, { passive: false });
 
         sliderContainer.addEventListener("touchend", () => {
             if (!isSwiping) return;
