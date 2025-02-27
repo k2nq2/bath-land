@@ -2264,7 +2264,7 @@ max-width: 18.1rem;
     }
     
     .slide5 {
-        flex: 0 0 50%; /* По умолчанию 2 карточки */
+       
         display: flex;
         justify-content: center;
     }
@@ -2308,7 +2308,7 @@ max-width: 18.1rem;
     
     /* Адаптив для телефонов */
     @media (max-width: 768px) {
-        .slide5 { flex: 0 0 100%; } /* Показывать 1 карточку */
+        .slide5 {} /* Показывать 1 карточку */
     }
     .progress-bar {
         width: 100%;
@@ -2611,7 +2611,7 @@ max-width: 18.1rem;
         }
         
         .slide5 {
-            flex: 0 0 50%; /* По умолчанию 2 карточки */
+           
             display: flex;
             justify-content: center;
         }
@@ -2641,7 +2641,7 @@ max-width: 18.1rem;
         
         /* Адаптив для телефонов */
         @media (max-width: 768px) {
-            .slide5 { flex: 0 0 100%;
+            .slide5 { 
                      z-index: 0;
                     } /* Показывать 1 карточку */
         }
