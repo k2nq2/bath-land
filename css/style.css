@@ -2638,6 +2638,7 @@ max-width: 18.1rem;
         @media (max-width: 768px) {
             .slide5 { flex: 0 0 100%;
                     cursor:pointer;
+                     z-index: 0;
                     } /* Показывать 1 карточку */
         }
         .progress-bar2 {
