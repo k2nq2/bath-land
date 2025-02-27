@@ -175,6 +175,11 @@ document.addEventListener("DOMContentLoaded", function () {
         let index = 0;
         let slidesToShow = window.innerWidth < 768 ? 1 : 2;
 
+        function getRem(px) {
+            const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+            return px / rootFontSize;
+        }
+
         function updateSlidesToShow() {
             slidesToShow = window.innerWidth < 768 ? 1 : 2;
             updateSlider();
@@ -182,8 +187,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function updateSlider() {
             const slideWidth = slides[0].offsetWidth;
-            sliderContainer.style.transition = "transform 0.3s ease"; // Добавил плавность
-            sliderContainer.style.transform = `translateX(-${index * slideWidth}px)`;
+            const slideWidthRem = getRem(slideWidth); // Конвертируем px → rem
+            sliderContainer.style.transition = "transform 0.3s ease";
+            sliderContainer.style.transform = `translateX(-${index * slideWidthRem}rem)`;
             updateProgressBar();
         }
 
@@ -245,7 +251,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Автоматически обновляем при изменении размера окна
         window.addEventListener("resize", updateSlidesToShow);
     }
 
