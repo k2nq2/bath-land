@@ -2260,6 +2260,7 @@ max-width: 18.1rem;
         transition: transform 0.3s ease-in-out;
         touch-action: pan-y;
         pointer-events: all;
+        will-change: transform;
     }
     
     .slide5 {
@@ -2531,6 +2532,7 @@ max-width: 18.1rem;
             user-select: none;
             touch-action: pan-y;
             pointer-events: all;
+            will-change: transform;
         }
         
         .slide6 {
