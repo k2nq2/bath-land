@@ -165,138 +165,93 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const sliderContainer = document.querySelector(".slider-container5");
-    const slides = document.querySelectorAll(".slide5");
-    const prevBtn = document.querySelector(".prev-btn5");
-    const nextBtn = document.querySelector(".next-btn5");
-    const progressBar = document.querySelector(".progress");
+    function initSlider(sliderContainerClass, slideClass, prevBtnClass, nextBtnClass, progressBarClass) {
+        const sliderContainer = document.querySelector(sliderContainerClass);
+        const slides = document.querySelectorAll(slideClass);
+        const prevBtn = document.querySelector(prevBtnClass);
+        const nextBtn = document.querySelector(nextBtnClass);
+        const progressBar = document.querySelector(progressBarClass);
 
-    let index = 0;
-    let slidesToShow = window.innerWidth < 768 ? 1 : 2;
+        let index = 0;
+        let slidesToShow = window.innerWidth < 768 ? 1 : 2;
 
-    function updateSlidesToShow() {
-        slidesToShow = window.innerWidth < 768 ? 1 : 2;
-        updateSlider();
-    }
-
-    function updateSlider() {
-        const slideWidth = slides[0].offsetWidth;
-        sliderContainer.style.transform = `translateX(-${index * slideWidth}px)`;
-        updateProgressBar();
-    }
-
-    function updateProgressBar() {
-        let progress = ((index + slidesToShow) / slides.length) * 100;
-        progressBar.style.width = `${progress}%`;
-    }
-
-    nextBtn.addEventListener("click", function () {
-        if (index < slides.length - slidesToShow) {
-            index++;
+        function updateSlidesToShow() {
+            slidesToShow = window.innerWidth < 768 ? 1 : 2;
             updateSlider();
         }
-    });
 
-    prevBtn.addEventListener("click", function () {
-        if (index > 0) {
-            index--;
-            updateSlider();
+        function updateSlider() {
+            const slideWidth = slides[0].offsetWidth;
+            sliderContainer.style.transform = `translateX(-${index * slideWidth}px)`;
+            updateProgressBar();
         }
-    });
 
-    // Поддержка свайпа
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    sliderContainer.addEventListener("touchstart", (e) => {
-        touchStartX = e.touches[0].clientX;
-    });
-
-    sliderContainer.addEventListener("touchend", (e) => {
-        touchEndX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        if (touchStartX - touchEndX > 50) {
-            if (index < slides.length - slidesToShow) index++;
-        } else if (touchEndX - touchStartX > 50) {
-            if (index > 0) index--;
+        function updateProgressBar() {
+            let progress = ((index + slidesToShow) / slides.length) * 100;
+            progressBar.style.width = `${progress}%`;
         }
-        updateSlider();
+
+        nextBtn.addEventListener("click", function () {
+            if (index < slides.length - slidesToShow) {
+                index++;
+                updateSlider();
+            }
+        });
+
+        prevBtn.addEventListener("click", function () {
+            if (index > 0) {
+                index--;
+                updateSlider();
+            }
+        });
+
+        // Поддержка свайпа
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isSwiping = false;
+
+        sliderContainer.addEventListener("touchstart", (e) => {
+            touchStartX = e.touches[0].clientX;
+            isSwiping = true;
+        }, { passive: false });
+
+        sliderContainer.addEventListener("touchmove", (e) => {
+            if (!isSwiping) return;
+            touchEndX = e.touches[0].clientX;
+            // e.preventDefault(); // Отключил, чтобы не блокировать скролл Safari
+        }, { passive: true });
+
+        sliderContainer.addEventListener("touchend", () => {
+            if (!isSwiping) return;
+            isSwiping = false;
+            handleSwipe();
+        });
+
+        sliderContainer.addEventListener("touchcancel", () => {
+            isSwiping = false;
+        });
+
+        function handleSwipe() {
+            let swipeDistance = touchStartX - touchEndX;
+
+            if (Math.abs(swipeDistance) > 50) { // Минимальная длина свайпа
+                if (swipeDistance > 0 && index < slides.length - slidesToShow) {
+                    index++;
+                } else if (swipeDistance < 0 && index > 0) {
+                    index--;
+                }
+                updateSlider();
+            }
+        }
+
+        // Автоматически обновляем при изменении размера окна
+        window.addEventListener("resize", updateSlidesToShow);
     }
 
-    // Автоматически обновляем при изменении размера окна
-    window.addEventListener("resize", updateSlidesToShow);
+    // Инициализация для обоих слайдеров
+    initSlider(".slider-container5", ".slide5", ".prev-btn5", ".next-btn5", ".progress");
+    initSlider(".slider-container6", ".slide6", ".prev-btn6", ".next-btn6", ".progress2");
 });
-document.addEventListener("DOMContentLoaded", function () {
-    const sliderContainer2 = document.querySelector(".slider-container6");
-    const slides2 = document.querySelectorAll(".slide6");
-    const prevBtn2 = document.querySelector(".prev-btn6");
-    const nextBtn2 = document.querySelector(".next-btn6");
-    const progressBar2 = document.querySelector(".progress2");
-
-    let index = 0;
-    let slides2ToShow = window.innerWidth < 768 ? 1 : 2;
-
-    function updateSlidesToShow() {
-        slides2ToShow = window.innerWidth < 768 ? 1 : 2;
-        updateSlider();
-    }
-
-    function updateSlider() {
-        const slideWidth = slides2[0].offsetWidth;
-        sliderContainer2.style.transform = `translateX(-${index * slideWidth}px)`;
-        updateProgressBar();
-    }
-
-    function updateProgressBar() {
-        let progress = ((index + slides2ToShow) / slides2.length) * 100;
-        progressBar2.style.width = `${progress}%`;
-    }
-
-    nextBtn2.addEventListener("click", function () {
-        if (index < slides2.length - slides2ToShow) {
-            index++;
-            updateSlider();
-        }
-    });
-
-    prevBtn2.addEventListener("click", function () {
-        if (index > 0) {
-            index--;
-            updateSlider();
-        }
-    });
-
-    // Поддержка свайпа
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    sliderContainer2.addEventListener("touchstart", (e) => {
-        touchStartX = e.touches[0].clientX;
-    });
-
-    sliderContainer2.addEventListener("touchend", (e) => {
-        touchEndX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        if (touchStartX - touchEndX > 50) {
-            if (index < slides2.length - slides2ToShow) index++;
-        } else if (touchEndX - touchStartX > 50) {
-            if (index > 0) index--;
-        }
-        updateSlider();
-    }
-
-    // Автоматически обновляем при изменении размера окна
-    window.addEventListener("resize", updateSlidesToShow);
-});
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const slides = document.querySelectorAll(".slide2");
