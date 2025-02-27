@@ -191,14 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sliderContainer.style.transition = "transform 0.3s ease";
             sliderContainer.style.transform = `translateX(-${index * slideWidthRem}rem)`;
             updateProgressBar();
-
-            // 🔥 Хак для обновления DOM (чтобы браузер не терял обработку свайпов)
-            setTimeout(() => {
-                sliderContainer.style.transform = "translateX(0)";
-                requestAnimationFrame(() => {
-                    sliderContainer.style.transform = "";
-                });
-            }, 50);
         }
 
         function updateProgressBar() {
@@ -241,7 +233,8 @@ document.addEventListener("DOMContentLoaded", function () {
             let diffY = Math.abs(touchMoveY - touchStartY);
 
             if (diffX > diffY) { 
-                e.preventDefault(); // Блокируем вертикальный скролл
+                // Блокируем вертикальный скролл только если движение горизонтальное
+                e.preventDefault();
             }
 
             touchEndX = touchMoveX;
