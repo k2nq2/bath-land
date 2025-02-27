@@ -2175,6 +2175,7 @@ max-width: 18.1rem;
 @media(max-width:600px){
     .team{
         margin-top: 10rem;
+        overflow:hidden;
     }
     .team-title-wrap{
         display: flex;
@@ -2516,7 +2517,6 @@ max-width: 18.1rem;
             position: relative;
             width: 100%;
             max-width: 60rem;
-            overflow: hidden;
             margin: auto;
             display: block !important;
             margin-top: 7rem;
