@@ -379,13 +379,60 @@ document.querySelectorAll('.service-wrap').forEach(block => {
     const plusIcon = block.querySelector('.circle');
     const popup = block.querySelector('.circle-item');
 
-    plusIcon.addEventListener('mouseover', () => {
+    function showPopup() {
         popup.style.opacity = '1';
         popup.style.pointerEvents = 'auto';
-    });
+    }
 
-    plusIcon.addEventListener('mouseout', () => {
+    function hidePopup() {
         popup.style.opacity = '0';
         popup.style.pointerEvents = 'none';
-    });
+    }
+
+    function handleInteraction() {
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+        if (isMobile) {
+            // Удаляем обработчики hover (на случай изменения экрана)
+            plusIcon.removeEventListener('mouseenter', showPopup);
+            plusIcon.removeEventListener('mouseleave', hidePopup);
+
+            // Добавляем обработчики для клика
+            plusIcon.addEventListener('click', (event) => {
+                event.stopPropagation();
+                showPopup();
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!popup.contains(event.target) && !plusIcon.contains(event.target)) {
+                    hidePopup();
+                }
+            });
+
+        } else {
+            // Удаляем обработчики клика (на случай изменения экрана)
+            plusIcon.replaceWith(plusIcon.cloneNode(true)); // Удаляем все обработчики событий
+            popup.replaceWith(popup.cloneNode(true));
+
+            // Назначаем новые ссылки на элементы
+            const newPlusIcon = block.querySelector('.circle');
+            const newPopup = block.querySelector('.circle-item');
+
+            newPlusIcon.addEventListener('mouseenter', () => {
+                newPopup.style.opacity = '1';
+                newPopup.style.pointerEvents = 'auto';
+            });
+
+            newPlusIcon.addEventListener('mouseleave', () => {
+                newPopup.style.opacity = '0';
+                newPopup.style.pointerEvents = 'none';
+            });
+        }
+    }
+
+    // Первоначальный вызов
+    handleInteraction();
+
+    // Переключение логики при изменении экрана
+    window.addEventListener('resize', handleInteraction);
 });
